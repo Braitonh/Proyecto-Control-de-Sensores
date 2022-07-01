@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head >
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>Sensores</title>
+</head>
+
+<body>
+
+
+<main>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col">
+                <div th:if="${success}" th:text="${success}" class="alert alert-success" role="alert"></div>
+
+                <div th:if="${sensores.isEmpty()}" class="alert alert-info alert-dismissible fade show" role="alert">
+                    You must enter sensores.
+                    <a th:href="@{/sensores/form}" class="alert-link">Create sensores.</a>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <div th:unless="${sensores.isEmpty()}" class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                        <tr class="table-dark">
+                            <th>Id</th>
+                            <th>name</th>
+                            <th>Select</th>
+                            <th>Update</th>
+                            <th>Disabled</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="sensor : ${sensores}">
+                            <td th:text="${sensor.id}"></td>
+                            <td th:text="${sensor.name}"></td>
+                            <td><a class="btn btn-warning" th:href="@{/sensores/__${sensor.id}__}">Select</a></td>
+                            <td><a class="btn btn-warning" th:href="@{/sensores/form/__${sensor.id}__}">Update</a></td>
+                            <td>
+                                <form th:action="${sensor.deleted} ? @{/sensores/enable/__${sensor.id}__} : @{/sensores/delete/__${sensor.id}__}"
+                                      method="post">
+                                    <button th:class="${sensor.deleted} ? 'btn btn-primary' : 'btn btn-danger'"
+                                            type="submit" th:text="${sensor.deleted} ? 'Enable' : 'disabled'">
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>

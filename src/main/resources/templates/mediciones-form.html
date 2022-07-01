@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head >
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>Sensores</title>
+</head>
+
+<body>
+
+
+<main>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-6">
+                <h3>Registrar mediciones</h3>
+                <form th:action="@{/mediciones/__${action}__}" th:object="${medicion}" method="post" autocomplete="off"
+                      class="needs-validation" novalidate>
+                    <input type="hidden" th:field="*{medicion}">
+
+                    <div class="form-floating mb-3">
+                        <input type="text" th:field="*{temperature}" id="temperature" class="form-control" placeholder="temperature"
+                               required>
+                        <label for="temperature">temperature</label>
+                        <div class="invalid-feedback">temperature is required</div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="date" th:field="*{date}" id="date" class="form-control" placeholder="date"
+                               required>
+                        <label for="date">date</label>
+                        <div class="invalid-feedback">date is required</div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="time" th:field="*{time}" id="time" class="form-control" placeholder="time"
+                               required>
+                        <label for="time">time</label>
+                        <div class="invalid-feedback">temperature is required</div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <select th:field="*{sensor}" id="sensor" class="form-control">
+                            <option th:each="senso : ${sensores}"
+                                    th:value="${senso.name}">
+                            </option>
+                        </select>
+
+                        <label for="sensor">Nombre del sensor</label>
+                        <div class="invalid-feedback">temperature is required</div>
+                    </div>
+
+
+
+                    <button th:text="${action == 'create' ? 'Create' : 'Update'}" type="submit"
+                            class="btn btn-primary"></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/validation.js}"></script>
+</body>
+
+</html>
